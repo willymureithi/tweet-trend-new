@@ -4,13 +4,13 @@ pipeline {
             label 'maven'
         }
     }
-environment{
+environment {
     PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
 }
     stages {
-        stage("build") {
+        stage("Build") {
             steps {
-                sh 'mvn clean deploy'
+                    sh 'mvn clean deploy'
             }
         }
     }
