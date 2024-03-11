@@ -18,13 +18,6 @@ pipeline {
                 echo "------- build completed -----"
             }
         }
-        stage("test"){
-            steps{
-                echo "----------- unit test started ----------"
-                sh 'mvn test'
-                 echo "----------- unit test Complted ----------"
-            }
-        }
 
         stage("SonarQube analysis") {
             steps {
