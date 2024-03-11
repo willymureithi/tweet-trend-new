@@ -11,12 +11,12 @@ pipeline {
     stages {
         stage("Build") {
             steps {
-                script {
                     echo "------- build started -----"
                     sh 'mvn clean deploy -DskipTests=true'
                     echo "------- build completed -----"
                 }
             }
+        }
             stage("test"){
                 steps{
                     echo "------- unit test started -----"
@@ -24,7 +24,7 @@ pipeline {
                     echo "------- unit test completed -----"
                 }
             }
-        }
+        
         stage('SonarQube analysis') {
             steps {
                 script {
