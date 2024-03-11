@@ -23,18 +23,25 @@ pipeline {
             steps {
                 echo "------- unit test started -----"
                 sh 'mvn test'
-                sh 'mvn surefire-report:report'
                 echo "------- unit test completed -----"
+            }
+        }
+        
+        stage('Generate Surefire Report') {
+            steps {
+                echo "------- surefire report generation started -----"
+                sh 'mvn surefire-report:report'
+                echo "------- surefire report generation completed -----"
             }
         }
         
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    withSonarQubeEnv('wilmultd-sonarqube-server') {
-                        sh "${env.scannerHome}/bin/sonar-scanner"
-                    }
+                echo "------- SonarQube analysis started -----"
+                withSonarQubeEnv('wilmultd-sonarqube-server') {
+                    sh "${env.scannerHome}/bin/sonar-scanner"
                 }
+                echo "------- SonarQube analysis completed -----"
             }
         }
     }
