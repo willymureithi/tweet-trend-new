@@ -4,10 +4,12 @@ pipeline {
             label 'maven'
         }
     }
+    
     environment {
         PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
         scannerHome = tool 'wilmultd-sonar-scanner'
     }
+    
     stages {
         stage("Build") {
             steps {
@@ -16,15 +18,17 @@ pipeline {
                 echo "------- build completed -----"
             }
         }
-        stage("test") {
+        
+        stage("Test") {
             steps {
                 echo "------- unit test started -----"
+                sh 'mvn test'
                 sh 'mvn surefire-report:report'
                 echo "------- unit test completed -----"
             }
         }
         
-        stage('SonarQube analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     withSonarQubeEnv('wilmultd-sonarqube-server') {
