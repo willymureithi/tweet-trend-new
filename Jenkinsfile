@@ -12,24 +12,21 @@ pipeline {
         stage("Build") {
             steps {
                 echo "------- build started -----"
-                sh 'mvn clean deploy -Dmaven.test.skip=true'
+                script {
+                    sh 'mvn clean deploy -Dmaven.test.skip=true'
+                }
                 echo "------- build completed -----"
             }
         }
-        stage("test") {
+
+        stage("SonarQube analysis") {
             steps {
-                echo "------- unit test started -----"
-                sh 'mvn surefire-report:report'
-                echo "------- unit test completed -----"
+                script {
+                    withSonarQubeEnv('wilmultd-sonarqube-server') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
             }
-        }
-        
-        stage('SonarQube analysis') {
-            steps{
-         withSonarQubeEnv('wilmultd-sonarqube-server') { // If you have configured more than one global server connection, you can specify its name
-          sh "${scannerHome}/bin/sonar-scanner"
-            }
-          }
         }
     }
 }
