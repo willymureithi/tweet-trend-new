@@ -1,6 +1,6 @@
 def registry = 'https://wilmultd.jfrog.io/'
 def imageName = 'wilmultd.jfrog.io/wilmutd-docker-local/ttrend'
-def version   = '2.1.2'
+def version   = '2.1.3'
 pipeline {
     agent {
         node {
